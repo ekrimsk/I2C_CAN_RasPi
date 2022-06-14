@@ -140,7 +140,7 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
     */
 
     // Is the * before __dta redunfance here? 
-    int tmp= wiringPiI2CReadRegN(_fd, __reg, (uint8_t*) __dta, len);
+    int tmp= wiringPiI2CReadRegN2(_fd, __reg, (uint8_t*) __dta, len);
 
     printf("get reg N, len %i\n", len); 
     
