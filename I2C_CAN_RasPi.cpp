@@ -103,9 +103,10 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, unsigned char *__dta)
     
     return 0;
     */
+
+    // returns data.byte & 0xFF (so only LSB) OR -1 if fails 
     int tmp = wiringPiI2CReadReg8(_fd, __reg);
     
-
     if (tmp == -1) {
         return false;
 
@@ -273,9 +274,7 @@ byte I2C_CAN::checkReceive(void)                                        // if so
         if(num > 0)
         {
             return CAN_MSGAVAIL;
-        } else {
-            printf("ppppppp\n");
-        }
+        } 
     }
     
     return 0;
