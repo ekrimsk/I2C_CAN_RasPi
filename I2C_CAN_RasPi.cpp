@@ -1,5 +1,8 @@
 #include "I2C_CAN_RasPi.h"
 
+
+
+
 // See https://docs.longan-labs.cc/1030017/ for DOCs
 
 I2C_CAN::I2C_CAN(unsigned char __addr)
@@ -137,7 +140,8 @@ byte I2C_CAN::init_Mask(byte num, byte ext, unsigned long ulData)       // init 
     unsigned char mask = (num == 0) ? REG_MASK0 : REG_MASK1;
     
     IIC_CAN_SetReg(mask, 5, dta);
-    delay(50);
+    //delay(50);
+    usleep(50000);
 }
 
 byte I2C_CAN::init_Filt(byte num, byte ext, unsigned long ulData)       // init filters
@@ -153,7 +157,8 @@ byte I2C_CAN::init_Filt(byte num, byte ext, unsigned long ulData)       // init 
     unsigned char filt = (7+num)*0x10;
     
     IIC_CAN_SetReg(filt, 5, dta);
-    delay(50);
+    //delay(50);
+    usleep(50000);
 }
 
 byte I2C_CAN::sendMsgBuf(unsigned long id, byte ext, byte rtr, byte len, byte *buf)     // send buf

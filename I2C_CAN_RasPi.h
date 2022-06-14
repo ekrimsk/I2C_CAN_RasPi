@@ -10,6 +10,9 @@
 
 #include "I2C_CAN_dfs.h"
 
+#include <unistd.h>  // usleep
+
+
 #define MCP_CAN I2C_CAN
 
 class I2C_CAN{
