@@ -114,7 +114,7 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, unsigned char *__dta)
 
     } else {
         *__dta = (uint8_t) tmp;  
-        printf("get reg 8 point %i\n", __dta); 
+        printf("get reg 8 point %i\n", *__dta); 
         return true;
     }
 }
@@ -140,8 +140,11 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
     */
 
     // Is the * before __dta redunfance here? 
+    int tmp= wiringPiI2CReadRegN(_fd, __reg, (uint8_t*) __dta, len);
+
+    printf("get reg N, len %i\n", len); 
     
-    if (wiringPiI2CReadRegN(_fd, __reg, (uint8_t*) __dta, len) == -1) {
+    if (tmp == -1) {
         return false;
     } else {
         return true; 
@@ -228,6 +231,7 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
     
     unsigned char dta[16];
     
+    // ALWAYS READ 16 BYTES
     IIC_CAN_GetReg(REG_RECV, 16, dta);  // 16 byte read 
     
     unsigned char __checksum = makeCheckSum(dta, 15);
