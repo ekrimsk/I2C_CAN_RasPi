@@ -39,7 +39,7 @@ public:
 public:
     
     I2C_CAN(unsigned char __addr);
-    byte begin(byte speedset);                                      // init can
+    //byte begin(byte speedset);                                      // init can -- not needed for RasPi version
     byte init_Mask(byte num, byte ext, unsigned long ulData);       // init Masks
     byte init_Filt(byte num, byte ext, unsigned long ulData);       // init filters
     byte sendMsgBuf(unsigned long id, byte ext, byte rtr, byte len, byte *buf);     // send buf
