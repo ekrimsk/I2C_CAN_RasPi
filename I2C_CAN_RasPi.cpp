@@ -235,6 +235,31 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
     IIC_CAN_GetReg(REG_RECV, 16, dta);  // 16 byte read 
     
     unsigned char __checksum = makeCheckSum(dta, 15);
+
+
+    // NOTE: copied for debug 
+     id = dta[0];
+    id <<= 8;
+    id += dta[1];
+    id <<= 8;
+    id += dta[2];
+    id <<= 8;
+    id += dta[3];
+    
+    *ID = id;
+    
+    m_ID  = id;
+    m_EXT = dta[4];
+    m_RTR = dta[5];
+    
+    *len = dta[6];   // NOTE: length gets set from the data 
+
+    printf("Received ID %i\n", (int) id);
+    printf("Received data length %i\n", (int) dta[6]);
+
+
+
+
     
     if(__checksum == dta[15])           // checksum ok
     {
