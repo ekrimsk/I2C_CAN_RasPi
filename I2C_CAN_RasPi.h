@@ -12,6 +12,9 @@
 
 #include <unistd.h>  // usleep
 
+#include <stdio.h>  // for debug
+
+
 
 #define MCP_CAN I2C_CAN
 
