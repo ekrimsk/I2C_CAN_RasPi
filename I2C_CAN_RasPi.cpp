@@ -225,7 +225,7 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
     
     unsigned char dta[16];
     
-    IIC_CAN_GetReg(REG_RECV, 16, dta);
+    IIC_CAN_GetReg(REG_RECV, 16, dta);  // 16 byte read 
     
     unsigned char __checksum = makeCheckSum(dta, 15);
     
@@ -245,12 +245,15 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
         m_EXT = dta[4];
         m_RTR = dta[5];
         
-        *len = dta[6];
+        *len = dta[6];   // NOTE: length gets set from the data 
         
         //Serial.print("readMsgBufID, len = ");
         //Serial.println(*len);
         
-        if(*len > 8)return 0;
+        if(*len > 8) {
+            printf("message length too long\n");
+            return 0;
+        }
         
         for(int i=0; i<*len; i++)
             buf[i] = dta[7+i];
@@ -260,6 +263,8 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
     else 
     {
         //Serial.println("CHECKSUM ERROR");
+        printf("Checksum error on recv\n");
+
         return 0;
     }
 }
