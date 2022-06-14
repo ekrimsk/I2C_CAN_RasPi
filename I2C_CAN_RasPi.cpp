@@ -1,69 +1,18 @@
-#include "Longan_I2C_CAN_Arduino.h"
+#include "I2C_CAN_RasPi.h"
 
+// See https://docs.longan-labs.cc/1030017/ for DOCs
 
 I2C_CAN::I2C_CAN(unsigned char __addr)
 {
     IIC_ADDR = __addr;
+    _fd =  wiringPiI2CSetup(IIC_ADDR); // get file descriptor 
 }
 
+/*
 void I2C_CAN::begin()
 {
     Wire.begin();
 }
-
-void I2C_CAN::IIC_CAN_SetReg(unsigned char __reg, unsigned char __len, unsigned char *__dta)
-{
-    Wire.beginTransmission(IIC_ADDR);
-    Wire.write(__reg);
-    for(int i=0; i<__len; i++)
-    {
-        Wire.write(__dta[i]);
-    }
-    Wire.endTransmission();
-    
-}
-
-void I2C_CAN::IIC_CAN_SetReg(unsigned char __reg, unsigned char __dta)
-{
-    Wire.beginTransmission(IIC_ADDR);
-    Wire.write(__reg);
-    Wire.write(__dta);
-    Wire.endTransmission();
-}
-
-bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, unsigned char *__dta)
-{
-    Wire.beginTransmission(IIC_ADDR);
-    Wire.write(__reg);
-    Wire.endTransmission();
-    Wire.requestFrom(IIC_ADDR, 1);
-    
-    while(Wire.available())
-    {
-        *__dta = Wire.read();
-        return 1;
-    }
-    
-    return 0;
-}
-
-bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
-{
-    Wire.beginTransmission(IIC_ADDR);
-    Wire.write(__reg);
-    Wire.endTransmission();
-    Wire.requestFrom(IIC_ADDR, len);
-    
-    int __len = 0;
-    
-    while(Wire.available())
-    {
-        __dta[__len++] = Wire.read();
-    }
-    
-    return (len == __len);
-}
-
 
 byte I2C_CAN::begin(byte speedset)                                      // init can
 {
@@ -83,6 +32,97 @@ byte I2C_CAN::begin(byte speedset)                                      // init 
     delay(100);
     return 0;
 }
+*/ 
+
+void I2C_CAN::IIC_CAN_SetReg(unsigned char __reg, unsigned char __len, unsigned char *__dta)
+{
+    /*
+    Wire.beginTransmission(IIC_ADDR);
+    Wire.write(__reg);
+    for(int i=0; i<__len; i++)
+    {
+        Wire.write(__dta[i]);
+    }
+    Wire.endTransmission();
+    */
+
+    wiringPiI2CWriteRegN(_fd, __reg, __dta, __len);
+
+    
+}
+
+void I2C_CAN::IIC_CAN_SetReg(unsigned char __reg, unsigned char __dta)
+{
+
+    /*
+    Wire.beginTransmission(IIC_ADDR);
+    Wire.write(__reg);
+    Wire.write(__dta);
+    Wire.endTransmission();
+    */
+    wiringPiI2CWriteReg8(_fd, __reg, __dta);
+
+}
+
+bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, unsigned char *__dta)
+{
+    /*
+    Wire.beginTransmission(IIC_ADDR);
+    Wire.write(__reg);
+    Wire.endTransmission();
+    Wire.requestFrom(IIC_ADDR, 1);
+    
+    while(Wire.available())
+    {
+        *__dta = Wire.read();
+        return 1;
+    }
+    
+    return 0;
+    */
+    int tmp = wiringPiI2CReadReg8(_fd, __reg);
+    
+
+    if (tmp == -1) {
+        return false;
+
+    } else {
+        *__dta = tmp;   
+        return true;
+    }
+}
+
+bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
+{
+    /*
+    Wire.beginTransmission(IIC_ADDR);
+    Wire.write(__reg);
+    Wire.endTransmission();
+    Wire.requestFrom(IIC_ADDR, len);
+    
+    int __len = 0;
+    
+    while(Wire.available())
+    {
+        __dta[__len++] = Wire.read();
+    }
+
+
+
+    return (len == __len);
+    */
+
+    
+    if (wiringPiI2CReadRegN(_fd, __reg, *__dta, len) == -1) {
+        return false;
+    } else {
+        return true; 
+    }
+
+}
+
+
+
 
 byte I2C_CAN::init_Mask(byte num, byte ext, unsigned long ulData)       // init Masks
 {
