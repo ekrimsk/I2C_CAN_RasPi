@@ -116,7 +116,7 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
     */
 
     
-    if (wiringPiI2CReadRegN(_fd, __reg, *__dta, len) == -1) {
+    if (wiringPiI2CReadRegN(_fd, __reg, (uint8_t*) *__dta, len) == -1) {
         return false;
     } else {
         return true; 
