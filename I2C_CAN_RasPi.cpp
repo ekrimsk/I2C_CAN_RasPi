@@ -11,14 +11,15 @@ I2C_CAN::I2C_CAN(unsigned char __addr)
     _fd =  wiringPiI2CSetup(IIC_ADDR); // get file descriptor 
 }
 
-/*
+
 void I2C_CAN::begin()
 {
-    Wire.begin();
+    // DO Nothing -- default speed 
 }
 
 byte I2C_CAN::begin(byte speedset)                                      // init can
 {
+    /*
     Wire.begin();
     
     IIC_CAN_SetReg(REG_BAUD, speedset);
@@ -33,9 +34,28 @@ byte I2C_CAN::begin(byte speedset)                                      // init 
     }
     
     delay(100);
+
+    return 0;
+    */
+
+    
+    IIC_CAN_SetReg(REG_BAUD, speedset);
+    //delay(10);
+    usleep(10000);
+    unsigned char __speed = 0;
+    
+    if(IIC_CAN_GetReg(REG_BAUD, &__speed))
+    {
+        if(speedset == __speed)return 1;
+        
+    }
+    
+    //delay(100);
+    usleep(100000);
+
     return 0;
 }
-*/ 
+
 
 void I2C_CAN::IIC_CAN_SetReg(unsigned char __reg, unsigned char __len, unsigned char *__dta)
 {
