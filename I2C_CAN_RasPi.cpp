@@ -267,11 +267,13 @@ byte I2C_CAN::checkReceive(void)                                        // if so
 {
     unsigned char num = 0;
     
-    if(IIC_CAN_GetReg(REG_DNUM, &num))
+    if(IIC_CAN_GetReg(REG_DNUM, &num)) // if true, return non zero
     {
         if(num > 0)
         {
             return CAN_MSGAVAIL;
+        } else {
+            printf("ppppppp\n");
         }
     }
     
