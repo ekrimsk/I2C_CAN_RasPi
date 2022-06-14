@@ -30,7 +30,7 @@ private:
     int _fd = 0x00; // file descriptor, will get edited in initialization
     
 public:
-    //void begin();   // don't need on RasPi 
+    void begin();   
     void IIC_CAN_SetReg(unsigned char __reg, unsigned char __len, unsigned char *__dta);
     void IIC_CAN_SetReg(unsigned char __reg, unsigned char __dta);
     bool IIC_CAN_GetReg(unsigned char __reg, unsigned char *__dta);
