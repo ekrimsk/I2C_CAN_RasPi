@@ -107,14 +107,12 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, unsigned char *__dta)
     // returns data.byte & 0xFF (so only LSB) OR -1 if fails 
     int tmp = wiringPiI2CReadReg8(_fd, __reg);
 
-    printf("get reg 8 %i\n", tmp);
     
     if (tmp == -1) {
         return false;
 
     } else {
         *__dta = (uint8_t) tmp;  
-        printf("get reg 8 point %i\n", *__dta); 
         return true;
     }
 }
@@ -140,10 +138,7 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
     */
 
     // Is the * before __dta redunfance here? 
-    int tmp= wiringPiI2CReadRegN(_fd, __reg, (uint8_t*) __dta, len);
-
-    printf("get reg N, len %i\n", len); 
-    
+    int tmp= wiringPiI2CReadRegN(_fd, __reg, (uint8_t*) __dta, len);    
     if (tmp == -1) {
         return false;
     } else {
