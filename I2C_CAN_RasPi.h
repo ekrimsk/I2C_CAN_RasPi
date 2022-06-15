@@ -38,7 +38,7 @@ public:
     void IIC_CAN_SetReg(unsigned char __reg, unsigned char __dta);
     bool IIC_CAN_GetReg(unsigned char __reg, unsigned char *__dta);
     bool IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta);
-    I2C_CAN::clear_buffer(void);
+    void clear_buffer(void);
     
 public:
     
