@@ -254,8 +254,7 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
     
     *len = dta[6];   // NOTE: length gets set from the data 
 
-    printf("Received ID %i\n", (int) id);
-    printf("Received data length %i\n", (int) dta[6]);
+
 
 
 
@@ -295,6 +294,10 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
     else 
     {
         //Serial.println("CHECKSUM ERROR");
+
+        printf("Received ID %i\n", (int) id);
+        printf("Received data length %i\n", (int) dta[6]);
+
         printf("Checksum error on recv\n");
 
         return 0;
