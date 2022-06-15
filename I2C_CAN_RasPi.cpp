@@ -15,6 +15,7 @@ I2C_CAN::I2C_CAN(unsigned char __addr)
 void I2C_CAN::begin()
 {
     // DO Nothing -- default speed 
+    clear_buffer();
 }
 
 byte I2C_CAN::begin(byte speedset)                                      // init can
@@ -52,6 +53,9 @@ byte I2C_CAN::begin(byte speedset)                                      // init 
     
     //delay(100);
     usleep(100000);
+
+    clear_buffer();
+    usleep(1000);
 
     return 0;
 }
@@ -232,28 +236,6 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
     unsigned char __checksum = makeCheckSum(dta, 15);
 
 
-    // NOTE: copied for debug 
-     id = dta[0];
-    id <<= 8;
-    id += dta[1];
-    id <<= 8;
-    id += dta[2];
-    id <<= 8;
-    id += dta[3];
-    
-    *ID = id;
-    
-    m_ID  = id;
-    m_EXT = dta[4];
-    m_RTR = dta[5];
-    
-    *len = dta[6];   // NOTE: length gets set from the data 
-
-
-
-
-
-
     
     if(__checksum == dta[15])           // checksum ok
     {
@@ -290,9 +272,31 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
     {
         //Serial.println("CHECKSUM ERROR");
 
+
+        // NOTE: copied for debug 
+        id = dta[0];
+        id <<= 8;
+        id += dta[1];
+        id <<= 8;
+        id += dta[2];
+        id <<= 8;
+        id += dta[3];
+        
+        *ID = id;
+        
+        m_ID  = id;
+        m_EXT = dta[4];
+        m_RTR = dta[5];
+        
+        *len = dta[6];   // NOTE: length gets set from the data 
+
+        // Is it possible this error is happening when there is nothing in the buffer?
+
+
+
+
         printf("Received ID %i\n", (int) id);
         printf("Received data length %i\n", (int) dta[6]);
-
         printf("Checksum error on recv\n");
 
         return 0;
@@ -349,5 +353,26 @@ unsigned char I2C_CAN::makeCheckSum(unsigned char *dta, int len)
     sum  = sum & 0xff;
     return sum;
 }
+
+
+/**
+ * 
+ *  Erez Added 
+ * 
+ */
+
+// May have old frames stored in the buffer, clear all of them on startup 
+
+void I2C_CAN::clear_buffer(void) {
+    unsigned char len = 0;
+    unsigned char buf[8];
+
+    while (CAN_MSGAVAIL == checkReceive()) {
+        readMsgBuf(&len, buf); 
+    }
+
+}
+
+
 
 // END FILE
