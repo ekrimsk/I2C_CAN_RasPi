@@ -11,7 +11,8 @@ I2C_CAN::I2C_CAN(unsigned char __addr)
     // For default I2c
     //_fd =  wiringPiI2CSetup(IIC_ADDR); // get file descriptor 
     // For I2C 5 which we have configured separately 
-    _fd =  wiringPiI2CSetupInterface("/dev/i2c-5", IIC_ADDR); // get file descriptor 
+    //_fd =  wiringPiI2CSetupInterface("/dev/i2c-5", IIC_ADDR); // get file descriptor 
+    _fd =  wiringPiI2CSetupInterface("/dev/i2c-0", IIC_ADDR); // get file descriptor 
 
 }
 
