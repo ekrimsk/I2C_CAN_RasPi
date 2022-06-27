@@ -163,9 +163,14 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
     wiringPiI2CWrite(_fd, __reg);
     //wiringPiI2CRead(_fd, __reg);
 
+    /*
     for (int i = 0; i < len; i++) {
        __dta[i] = wiringPiI2CRead(_fd);
     }
+    */ 
+
+    https://raspberrypi.stackexchange.com/questions/87142/reading-multiple-bytes-in-raspberry-pi-over-i2c-using-wiring-pi-library
+    read(_fd, __dta, len)
 
     return true;
 
