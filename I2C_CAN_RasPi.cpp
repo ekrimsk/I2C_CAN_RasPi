@@ -306,8 +306,8 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
         
 
         printf("======\n");
-        int num_frames = framesAvail();
-        printf("Frames avail %i\n", num_frames);
+        //int num_frames = framesAvail();
+        //printf("Frames avail %i\n", num_frames);
 
 
 
