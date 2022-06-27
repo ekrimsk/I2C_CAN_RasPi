@@ -46,7 +46,7 @@ byte I2C_CAN::begin(byte speedset)                                      // init 
 
 
     clear_buffer();
-    
+
 
     printf("Setting I2C-CAN motor baud...\n");
     
@@ -170,8 +170,8 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
     
 
     // Added this line 
-    wiringPiI2CWrite(_fd, __reg);
-    //wiringPiI2CRead(_fd, __reg);
+    //wiringPiI2CWrite(_fd, __reg);
+    wiringPiI2CRead(_fd, __reg);
 
     /*
     for (int i = 0; i < len; i++) {
