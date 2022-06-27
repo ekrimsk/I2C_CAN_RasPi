@@ -79,12 +79,12 @@ void I2C_CAN::IIC_CAN_SetReg(unsigned char __reg, unsigned char __len, unsigned 
     Wire.endTransmission();
     */
 
-    //wiringPiI2CWriteRegN(_fd, __reg, __dta, __len);
+    wiringPiI2CWriteRegN(_fd, __reg, __dta, __len);
 
 
     // Try this version
-    wiringPiI2CWrite(_fd, __reg);
-    write(_fd, __dta, __len);
+    //wiringPiI2CWrite(_fd, __reg);
+    //write(_fd, __dta, __len);
 
     
 }
