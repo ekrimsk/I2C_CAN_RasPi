@@ -29,6 +29,8 @@ private:
     
     unsigned char makeCheckSum(unsigned char *dta, int len);
 
+    bool clear_flag = false;
+
     // Added for RasPi
     int _fd = 0x00; // file descriptor, will get edited in initialization
     
@@ -41,6 +43,8 @@ public:
     bool IIC_CAN_GetReg(unsigned char __reg, unsigned char *__dta);
     bool IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta);
     void clear_buffer(void);
+
+
 
     byte checkReceive(void);                                        // if something received
     int framesAvail(void);

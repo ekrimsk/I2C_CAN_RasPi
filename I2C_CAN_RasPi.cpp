@@ -348,22 +348,25 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
         // Is it possible this error is happening when there is nothing in the buffer?
 
 
-        printf("Received ID %i\n", (int) id);
-        printf("Received data length %i\n", (int) dta[6]);
-        printf("byte 0 %i\n", (int) dta[0]);
-        printf("byte 1 %i\n", (int) dta[1]);
-        printf("byte 2 %i\n", (int) dta[2]);
-        printf("byte 3 %i\n", (int) dta[3]);
-        printf("byte 4 %i\n", (int) dta[4]);
-        printf("byte 5 %i\n", (int) dta[5]);
-        printf("Checksum error on recv, computed checksum %#04x, recieved checksum %#04x\n", __checksum, dta[15]);
-        
-
-        printf("======\n");
-        int num_frames = framesAvail();
-        printf("Frames avail %i\n", num_frames);
+        if (!clear_flag) {
 
 
+            printf("Received ID %i\n", (int) id);
+            printf("Received data length %i\n", (int) dta[6]);
+            printf("byte 0 %i\n", (int) dta[0]);
+            printf("byte 1 %i\n", (int) dta[1]);
+            printf("byte 2 %i\n", (int) dta[2]);
+            printf("byte 3 %i\n", (int) dta[3]);
+            printf("byte 4 %i\n", (int) dta[4]);
+            printf("byte 5 %i\n", (int) dta[5]);
+            printf("Checksum error on recv, computed checksum %#04x, recieved checksum %#04x\n", __checksum, dta[15]);
+            
+
+            printf("======\n");
+            int num_frames = framesAvail();
+            printf("Frames avail %i\n", num_frames);
+
+        }
 
         return 0;
     }
@@ -438,9 +441,13 @@ void I2C_CAN::clear_buffer(void) {
     unsigned char len = 0;
     unsigned char buf[8];
 
+    clear_flag = true;
+
     while (CAN_MSGAVAIL == checkReceive()) {
         readMsgBuf(&len, buf); 
     }
+
+    clear_flag = false; 
 
 }
 
