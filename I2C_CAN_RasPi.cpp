@@ -113,10 +113,20 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, unsigned char *__dta)
     return 0;
     */
 
+    // Write so it point to the register 
+    wiringPiI2CWrite(_fd, __reg);
+    // No read a byte back 
+    int tmp = wiringPiI2CRead(_fd) ;
+
+    /*
+    // old veersion
+
     // returns data.byte & 0xFF (so only LSB) OR -1 if fails 
     int tmp = wiringPiI2CReadReg8(_fd, __reg);
 
     
+  
+    */
     if (tmp == -1) {
         return false;
 
@@ -307,8 +317,8 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
         
 
         printf("======\n");
-        //int num_frames = framesAvail();
-        //printf("Frames avail %i\n", num_frames);
+        int num_frames = framesAvail();
+        printf("Frames avail %i\n", num_frames);
 
 
 
