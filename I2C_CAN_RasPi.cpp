@@ -44,6 +44,10 @@ byte I2C_CAN::begin(byte speedset)                                      // init 
     return 0;
     */
 
+
+    clear_buffer();
+    
+
     printf("Setting I2C-CAN motor baud...\n");
     
     IIC_CAN_SetReg(REG_BAUD, speedset);
