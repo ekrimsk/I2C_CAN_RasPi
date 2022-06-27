@@ -44,6 +44,7 @@ byte I2C_CAN::begin(byte speedset)                                      // init 
     return 0;
     */
 
+    printf("Setting I2C-CAN motor baud...\n");
     
     IIC_CAN_SetReg(REG_BAUD, speedset);
     //delay(10);
@@ -78,7 +79,12 @@ void I2C_CAN::IIC_CAN_SetReg(unsigned char __reg, unsigned char __len, unsigned 
     Wire.endTransmission();
     */
 
-    wiringPiI2CWriteRegN(_fd, __reg, __dta, __len);
+    //wiringPiI2CWriteRegN(_fd, __reg, __dta, __len);
+
+
+    // Try this version
+    wiringPiI2CWrite(_fd, __reg);
+    write(_fd, __dta, len);
 
     
 }
@@ -169,7 +175,8 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
     }
     */ 
 
-    https://raspberrypi.stackexchange.com/questions/87142/reading-multiple-bytes-in-raspberry-pi-over-i2c-using-wiring-pi-library
+    //https://raspberrypi.stackexchange.com/questions/87142/reading-multiple-bytes-in-raspberry-pi-over-i2c-using-wiring-pi-library
+    // This seems significantly faster than read reg N
     read(_fd, __dta, len);
 
     return true;
