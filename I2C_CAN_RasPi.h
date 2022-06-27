@@ -36,6 +36,8 @@ private:
     
 public:
     I2C_CAN(unsigned char __addr);
+    ~I2C_CAN();
+
 
     void begin();   
     void IIC_CAN_SetReg(unsigned char __reg, unsigned char __len, unsigned char *__dta);

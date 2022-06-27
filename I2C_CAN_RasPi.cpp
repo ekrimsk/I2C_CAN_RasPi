@@ -16,6 +16,9 @@ I2C_CAN::I2C_CAN(unsigned char __addr)
 
 }
 
+I2C_CAN::~I2C_CAN(){
+    clear_buffer();
+}
 
 void I2C_CAN::begin()
 {
@@ -64,8 +67,6 @@ byte I2C_CAN::begin(byte speedset)                                      // init 
     //delay(100);
     usleep(100000);
 
-    clear_buffer();
-    usleep(1000);
 
     return 0;
 }
