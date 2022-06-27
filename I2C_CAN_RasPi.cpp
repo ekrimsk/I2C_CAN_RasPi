@@ -156,12 +156,20 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
     return (len == __len);
     */
 
+    // https://stackoverflow.com/questions/55976683/read-a-block-of-data-from-a-specific-registerfifo-using-c-c-and-i2c-in-raspb
     
 
     // Added this line 
     wiringPiI2CWrite(_fd, __reg);
+    //wiringPiI2CRead(_fd, __reg);
 
+    for (int i = 0; i < len; i++) {
+       __data[i] = wiringPiI2CRead(_fd);
+    }
 
+    return true;
+
+    /*
 
 
     // Is the * before __dta redunfance here? 
@@ -174,6 +182,7 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
     } else {
         return true; 
     }
+    */
     
 }
 
