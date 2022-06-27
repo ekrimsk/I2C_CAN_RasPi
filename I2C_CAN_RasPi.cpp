@@ -170,8 +170,7 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
     
 
     // Added this line 
-    //wiringPiI2CWrite(_fd, __reg);
-    wiringPiI2CReadReg8(_fd, __reg);
+    wiringPiI2CWrite(_fd, __reg);
 
     /*
     for (int i = 0; i < len; i++) {
