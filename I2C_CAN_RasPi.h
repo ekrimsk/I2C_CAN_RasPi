@@ -33,16 +33,18 @@ private:
     int _fd = 0x00; // file descriptor, will get edited in initialization
     
 public:
+    I2C_CAN(unsigned char __addr);
+
     void begin();   
     void IIC_CAN_SetReg(unsigned char __reg, unsigned char __len, unsigned char *__dta);
     void IIC_CAN_SetReg(unsigned char __reg, unsigned char __dta);
     bool IIC_CAN_GetReg(unsigned char __reg, unsigned char *__dta);
     bool IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta);
     void clear_buffer(void);
+
+    byte checkReceive(void);                                        // if something received
+    int framesAvail(void);
     
-public:
-    
-    I2C_CAN(unsigned char __addr);
     byte begin(byte speedset);                                      // init can 
     byte init_Mask(byte num, byte ext, unsigned long ulData);       // init Masks
     byte init_Filt(byte num, byte ext, unsigned long ulData);       // init filters
@@ -50,7 +52,6 @@ public:
     byte sendMsgBuf(unsigned long id, byte ext, byte len, byte *buf);               // send buf
     byte readMsgBuf(byte *len, byte *buf);                          // read buf
     byte readMsgBufID(unsigned long *ID, byte *len, byte *buf);     // read buf with object ID
-    byte checkReceive(void);                                        // if something received
     byte checkError(void);                                          // if something error
     unsigned long getCanId(void);                                   // get can id when receive
     byte isRemoteRequest(void);                                     // get RR flag when receive
