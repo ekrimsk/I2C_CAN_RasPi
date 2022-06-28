@@ -136,6 +136,8 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, unsigned char *__dta)
 
     // Write so it point to the register 
     wiringPiI2CWrite(_fd, __reg);
+    usleep(100);
+    
 
     // No read a byte back 
     int tmp = wiringPiI2CRead(_fd) ;
@@ -308,8 +310,6 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
 
         printf("Adding delay\n");
         usleep(2000);
-
-
     }
     
     
