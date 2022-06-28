@@ -6,11 +6,11 @@
 #include <stdint.h> // for uint
 #define byte uint8_t // so we dont need to edit all the instances
 #include <wiringPiI2C.h> // rewriting for the Pi 
-#include <wiringPi.h> // for micros, remmvoe if dont need
+//#include <wiringPi.h> // for micros, remmvoe if dont need
 
 
-
-#define MIN_WRITE_DELAY 100 // 100 works, can potentially go lower than 50 too
+// 100 works, 50 seems to mostly work but theres not much time to be saved here really 
+#define MIN_WRITE_DELAY 50 
 
 #include "I2C_CAN_dfs.h"
 

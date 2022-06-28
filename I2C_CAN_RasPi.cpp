@@ -11,7 +11,7 @@ I2C_CAN::I2C_CAN(unsigned char __addr)
 
 
     // Remove if only use for micros
-    wiringPiSetupSys();  // needed for timing 
+    //wiringPiSetupSys();  // needed for timing 
 
 
     // For default I2c
@@ -295,16 +295,18 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
     // For debug on checking if frame there 
 
 
-    
-    unsigned long tic = micros();
+    //unsigned long tic = micros();
     int tmp_num_frames = framesAvail();
-    unsigned long tframe = micros() - tic; 
+    //unsigned long tframe = micros() - tic; 
 
 
     if (tmp_num_frames > 1) { 
-        printf("Frames avail %i, time %i\n", tmp_num_frames, (int) tframe);
+        printf("Frames avail %i\n", tmp_num_frames);        
+        //printf("time %i\n", (int) tframe);
+
     } else if (tmp_num_frames == 0) {
-        printf("Frames avail %i, time %i\n", tmp_num_frames, (int) tframe);
+        printf("Frames avail %i\n", tmp_num_frames);
+        //printf("time %i\n", (int) tframe);
         usleep(400);
         /*
         while (tmp_num_frames == 0) {
