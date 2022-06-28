@@ -8,6 +8,12 @@
 I2C_CAN::I2C_CAN(unsigned char __addr)
 {
     IIC_ADDR = __addr;
+
+
+    // Remove if only use for micros
+    wiringPiSetupSys();  // needed for timing 
+
+
     // For default I2c
     //_fd =  wiringPiI2CSetup(IIC_ADDR); // get file descriptor 
     // For I2C 5 which we have configured separately 
