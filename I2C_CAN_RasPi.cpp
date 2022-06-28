@@ -187,7 +187,7 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
 
     //https://raspberrypi.stackexchange.com/questions/87142/reading-multiple-bytes-in-raspberry-pi-over-i2c-using-wiring-pi-library
     // This seems significantly faster than read reg N
-    //read(_fd, __dta, len);
+    read(_fd, __dta, len);
 
     //return true;
 
@@ -195,6 +195,7 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
     // Is the * before __dta redunfance here? 
     
     //int tmp= wiringPiI2CReadRegN(_fd, __reg, (uint8_t*) __dta, len);  
+    /*
     int tmp= wiringPiI2CReadRegN(_fd, __reg,  __dta, len);    
 
     if (tmp == -1) {
@@ -202,7 +203,7 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
     } else {
         return true; 
     }
-    
+    */
     
 }
 
