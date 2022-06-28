@@ -185,7 +185,7 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
 
     // Added this line 
     wiringPiI2CWrite(_fd, __reg);
-    usleep(100);
+    usleep(MIN_WRITE_DELAY);
 
     /*
     for (int i = 0; i < len; i++) {
@@ -352,31 +352,11 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
     else 
     {
         
-        
-        // NOTE: copied for debug 
-        id = dta[0];
-        id <<= 8;
-        id += dta[1];
-        id <<= 8;
-        id += dta[2];
-        id <<= 8;
-        id += dta[3];
-        
-        *ID = id;
-        
-        m_ID  = id;
-        m_EXT = dta[4];
-        m_RTR = dta[5];
-        
-        *len = dta[6];   // NOTE: length gets set from the data 
-
         // Is it possible this error is happening when there is nothing in the buffer?
 
 
         if (!clear_flag) {
 
-
-            printf("Received ID %i\n", (int) id);
             printf("Received data length %i\n", (int) dta[6]);
             printf("byte 0 %i\n", (int) dta[0]);
             printf("byte 1 %i\n", (int) dta[1]);
@@ -385,8 +365,6 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
             printf("byte 4 %i\n", (int) dta[4]);
             printf("byte 5 %i\n", (int) dta[5]);
             printf("byte 6 %i\n", (int) dta[6]);
-            printf("byte 7 %i\n", (int) dta[7]);
-            printf("byte 8 %i\n", (int) dta[8]);
 
             printf("Checksum error on recv, computed checksum %#04x, recieved checksum %#04x\n", __checksum, dta[15]);
             
