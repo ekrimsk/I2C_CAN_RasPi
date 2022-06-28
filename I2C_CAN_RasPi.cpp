@@ -95,8 +95,6 @@ void I2C_CAN::IIC_CAN_SetReg(unsigned char __reg, unsigned char __len, unsigned 
     */
 
     wiringPiI2CWriteRegN(_fd, __reg, __dta, __len);
-
-
     // Try this version
     //wiringPiI2CWrite(_fd, __reg);
     //write(_fd, __dta, __len);
@@ -308,8 +306,12 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
     } else if (tmp_num_frames == 0) {
         printf("Frames avail %i, time %i\n", tmp_num_frames, (int) tframe);
 
-        printf("Adding delay\n");
-        usleep(2000);
+        while (tmp_num_frames == 0) {
+            usleep(50);
+            tmp_num_frames = framesAvail();
+            printf("Frames avail %i, time %i\n", tmp_num_frames, (int) tframe);
+        }
+        
     }
     
     
