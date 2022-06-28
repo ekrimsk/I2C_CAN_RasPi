@@ -295,14 +295,22 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
     // For debug on checking if frame there 
 
 
-    usleep(2000);
     
-    printf("++++++++\n");
     unsigned long tic = micros();
     int tmp_num_frames = framesAvail();
     unsigned long tframe = micros() - tic; 
-    printf("Frames avail %i, time %i\n", tmp_num_frames, (int) tframe);
-    
+
+
+    if (tmp_num_frames > 1) { 
+        printf("Frames avail %i, time %i\n", tmp_num_frames, (int) tframe);
+    } else if (tmp_num_frames == 0) {
+        printf("Frames avail %i, time %i\n", tmp_num_frames, (int) tframe);
+
+        printf("Adding delay\n");
+        usleep(2000);
+
+
+    }
     
     
     // ALWAYS READ 16 BYTES
