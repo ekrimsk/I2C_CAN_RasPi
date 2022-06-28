@@ -201,7 +201,7 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
         return false;
     } else {
         return true; 
-
+    }
     
     
 }
