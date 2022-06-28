@@ -360,6 +360,10 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
             printf("byte 3 %i\n", (int) dta[3]);
             printf("byte 4 %i\n", (int) dta[4]);
             printf("byte 5 %i\n", (int) dta[5]);
+            printf("byte 6 %i\n", (int) dta[6]);
+            printf("byte 7 %i\n", (int) dta[7]);
+            printf("byte 8 %i\n", (int) dta[8]);
+
             printf("Checksum error on recv, computed checksum %#04x, recieved checksum %#04x\n", __checksum, dta[15]);
             
 
@@ -368,6 +372,7 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
             printf("Frames avail %i\n", num_frames);
 
             if (num_frames > 0) {
+                printf("Clearing buffer\n");
                 clear_buffer();
             }
 
