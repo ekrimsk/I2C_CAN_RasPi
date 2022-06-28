@@ -6,6 +6,8 @@
 #include <stdint.h> // for uint
 #define byte uint8_t // so we dont need to edit all the instances
 #include <wiringPiI2C.h> // rewriting for the Pi 
+#include <wiringPi.h> // for micros, remmvoe if dont need
+
 
 
 #include "I2C_CAN_dfs.h"
