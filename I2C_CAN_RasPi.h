@@ -10,6 +10,8 @@
 
 
 
+#define MIN_WRITE_DELAY 50
+
 #include "I2C_CAN_dfs.h"
 
 #include <unistd.h>  // usleep
