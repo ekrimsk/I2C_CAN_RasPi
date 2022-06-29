@@ -305,9 +305,9 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
         //printf("time %i\n", (int) tframe);
 
     } else if (tmp_num_frames == 0) {
-        printf("Frames avail %i\n", tmp_num_frames);
+        printf(" //////// Frames avail %i\n", tmp_num_frames);
         //printf("time %i\n", (int) tframe);
-        usleep(400);
+        usleep(800);
         /*
         while (tmp_num_frames == 0) {
             usleep(50);
