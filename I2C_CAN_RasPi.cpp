@@ -61,7 +61,7 @@ byte I2C_CAN::begin(byte speedset)                                      // init 
     
     IIC_CAN_SetReg(REG_BAUD, speedset);
     //delay(10);
-    usleep(10000);
+    I2C_sleep(10000);
     unsigned char __speed = 0;
     
     if(IIC_CAN_GetReg(REG_BAUD, &__speed))
@@ -71,7 +71,8 @@ byte I2C_CAN::begin(byte speedset)                                      // init 
     }
     
     //delay(100);
-    usleep(100000);
+    //I2C_sleep(100000);
+    I2C_sleep(90000);
 
 
 
@@ -134,7 +135,7 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, unsigned char *__dta)
 
     // Write so it point to the register 
     wiringPiI2CWrite(_fd, __reg);
-    usleep(MIN_WRITE_DELAY);
+    I2C_sleep(MIN_WRITE_DELAY);
 
 
     // No read a byte back 
@@ -183,7 +184,7 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
 
     // Added this line 
     wiringPiI2CWrite(_fd, __reg);
-    usleep(MIN_WRITE_DELAY);
+    I2C_sleep(MIN_WRITE_DELAY);
 
     /*
     for (int i = 0; i < len; i++) {
@@ -230,7 +231,7 @@ byte I2C_CAN::init_Mask(byte num, byte ext, unsigned long ulData)       // init 
     
     IIC_CAN_SetReg(mask, 5, dta);
     //delay(50);
-    usleep(50000);
+    I2C_sleep(50000);
 }
 
 byte I2C_CAN::init_Filt(byte num, byte ext, unsigned long ulData)       // init filters
@@ -247,7 +248,7 @@ byte I2C_CAN::init_Filt(byte num, byte ext, unsigned long ulData)       // init 
     
     IIC_CAN_SetReg(filt, 5, dta);
     //delay(50);
-    usleep(50000);
+    I2C_sleep(50000);
 }
 
 byte I2C_CAN::sendMsgBuf(unsigned long id, byte ext, byte rtr, byte len, byte *buf)     // send buf
@@ -297,7 +298,6 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
 
     //unsigned long tic = micros();
     int tmp_num_frames = framesAvail();
-    //unsigned long tframe = micros() - tic; 
 
 
     if (tmp_num_frames > 1) { 
@@ -305,12 +305,12 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
         //printf("time %i\n", (int) tframe);
 
     } else if (tmp_num_frames == 0) {
-        printf(" //////// Frames avail %i\n", tmp_num_frames);
+        printf(" Frames avail %i\n", tmp_num_frames);
         //printf("time %i\n", (int) tframe);
-        usleep(800);
+        I2C_sleep(800);
         /*
         while (tmp_num_frames == 0) {
-            usleep(50);
+            I2C_sleep(50);
             tmp_num_frames = framesAvail();
             printf("Frames avail %i, time %i\n", tmp_num_frames, (int) tframe);
         }
@@ -473,5 +473,14 @@ void I2C_CAN::clear_buffer(void) {
 }
 
 
+// Custom Replacement For I2C_sleep to check some bugs 
+void I2C_sleep(uint32_t microseconds) { 
+
+    struct timespec rem_time;
+
+    ts.tv_sec = 0;
+    ts.tv_nsec = 1000*microseconds;
+    nanosleep(&ts, &rem_time);
+}
 
 // END FILE
