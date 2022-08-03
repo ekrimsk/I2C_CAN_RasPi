@@ -17,7 +17,7 @@
 #include "I2C_CAN_dfs.h"
 
 #include <unistd.h>  // usleep
-
+#include <time.h>
 #include <stdio.h>  // for debug
 
 
