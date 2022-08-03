@@ -494,12 +494,23 @@ void I2C_CAN::clear_buffer(void) {
 // Custom Replacement For I2C_sleep to check some bugs 
 void I2C_CAN::I2C_sleep(uint32_t microseconds) { 
 
+
+    /*
     struct timespec ts;
     struct timespec rem_time;
 
     ts.tv_sec = 0;
     ts.tv_nsec = 1000*microseconds;
     nanosleep(&ts, &rem_time);
+
+    */
+
+    uint32_t t_start = T_NOW_US();
+    uint32_t t_comp = T_NOW_US();
+    while (t_comp - t_start < microseconds) {
+        t_comp = T_NOW_US();
+    }
+
 }
 
 // END FILE

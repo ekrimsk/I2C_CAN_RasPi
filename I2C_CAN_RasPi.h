@@ -1,6 +1,8 @@
 #ifndef __I2C_CAN_RASPI_H__
 #define __I2C_CAN_RASPI_H__
 
+// Move this elsewhere? 
+#define T_NOW_US() std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
 
 #include <stdint.h> // for uint
@@ -16,10 +18,10 @@
 
 #include "I2C_CAN_dfs.h"
 
-#include <unistd.h>  // usleep
+//#include <unistd.h>  // usleep
 #include <time.h>
 #include <stdio.h>  // for debug
-
+#include <chrono>
 
 
 #define MCP_CAN I2C_CAN
