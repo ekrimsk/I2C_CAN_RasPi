@@ -193,7 +193,11 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
 
     // Added this line 
     wiringPiI2CWrite(_fd, __reg);
-    I2C_sleep(MIN_WRITE_DELAY);
+    //I2C_sleep(MIN_WRITE_DELAY);
+    printf("foo\n");
+
+
+
     read(_fd, __dta, len);
 
 
