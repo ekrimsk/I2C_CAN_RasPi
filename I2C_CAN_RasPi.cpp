@@ -314,6 +314,7 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
 
     // For debug on checking if frame there 
 
+    /*
 
     //unsigned long tic = micros();
     int tmp_num_frames = framesAvail();
@@ -327,15 +328,15 @@ byte I2C_CAN::readMsgBufID(unsigned long *ID, byte *len, byte *buf)     // read 
         printf(" Frames avail %i\n", tmp_num_frames);
         //printf("time %i\n", (int) tframe);
         I2C_sleep(800);
-        /*
-        while (tmp_num_frames == 0) {
-            I2C_sleep(50);
-            tmp_num_frames = framesAvail();
-            printf("Frames avail %i, time %i\n", tmp_num_frames, (int) tframe);
-        }
-        */
+        
+        //while (tmp_num_frames == 0) {
+        //    I2C_sleep(50);
+        //    tmp_num_frames = framesAvail();
+        //    printf("Frames avail %i, time %i\n", tmp_num_frames, (int) tframe);
+        //}
+        
     }
-    
+    */
     
     // ALWAYS READ 16 BYTES
     IIC_CAN_GetReg(REG_RECV, 16, dta);  // 16 byte read 
