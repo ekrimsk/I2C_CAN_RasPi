@@ -40,7 +40,7 @@ private:
     // Added for RasPi
     int _fd = 0x00; // file descriptor, will get edited in initialization
 
-    void I2C_sleep(uint32_t);
+    void I2C_sleep(uint32_t microseconds);
 
     struct timespec ts;
     
