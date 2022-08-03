@@ -42,7 +42,7 @@ private:
 
     void I2C_sleep(uint32_t microseconds);
 
-    struct timespec ts;
+    //struct timespec ts;
     
 public:
     I2C_CAN(unsigned char __addr);

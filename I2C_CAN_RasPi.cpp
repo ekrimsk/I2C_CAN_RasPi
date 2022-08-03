@@ -476,6 +476,7 @@ void I2C_CAN::clear_buffer(void) {
 // Custom Replacement For I2C_sleep to check some bugs 
 void I2C_sleep(uint32_t microseconds) { 
 
+    struct timespec ts;
     struct timespec rem_time;
 
     ts.tv_sec = 0;
