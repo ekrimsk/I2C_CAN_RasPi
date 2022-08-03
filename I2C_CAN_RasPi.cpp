@@ -20,16 +20,25 @@ I2C_CAN::I2C_CAN(unsigned char __addr)
     //_fd =  wiringPiI2CSetupInterface("/dev/i2c-5", IIC_ADDR); // get file descriptor 
     _fd =  wiringPiI2CSetupInterface("/dev/i2c-0", IIC_ADDR); // get file descriptor 
 
+    printf("I2C Can Constructor...\n");
+
 }
 
 I2C_CAN::~I2C_CAN(){
     clear_buffer();
+
+    close(_fd);
+
+    printf("I2C Can Destructor\n");
+
+
 }
 
 void I2C_CAN::begin()
 {
     // DO Nothing -- default speed 
     clear_buffer();
+
 }
 
 byte I2C_CAN::begin(byte speedset)                                      // init can
@@ -185,6 +194,10 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
     // Added this line 
     wiringPiI2CWrite(_fd, __reg);
     I2C_sleep(MIN_WRITE_DELAY);
+    read(_fd, __dta, len);
+
+
+
 
     /*
     for (int i = 0; i < len; i++) {
@@ -194,8 +207,6 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
 
     //https://raspberrypi.stackexchange.com/questions/87142/reading-multiple-bytes-in-raspberry-pi-over-i2c-using-wiring-pi-library
     // This seems significantly faster than read reg N
-    read(_fd, __dta, len);
-
     //return true;
 
     

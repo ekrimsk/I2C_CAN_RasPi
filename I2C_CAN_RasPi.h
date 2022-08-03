@@ -10,8 +10,8 @@
 
 
 // 100 works, 50 seems to mostly work but theres not much time to be saved here really 
-//#define MIN_WRITE_DELAY 50 
-#define MIN_WRITE_DELAY 10 
+#define MIN_WRITE_DELAY 50 
+//#define MIN_WRITE_DELAY 10  
 
 
 #include "I2C_CAN_dfs.h"
