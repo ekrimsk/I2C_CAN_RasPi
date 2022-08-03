@@ -144,10 +144,8 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, unsigned char *__dta)
 
     // Write so it point to the register 
     wiringPiI2CWrite(_fd, __reg);
-
-
     I2C_sleep(MIN_WRITE_DELAY);
-    printf("bar\n");
+
 
 
 
@@ -198,10 +196,6 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, int len, unsigned char *__dta)
     // Added this line 
     wiringPiI2CWrite(_fd, __reg);
     I2C_sleep(MIN_WRITE_DELAY);
-    printf("foo\n");
-
-
-
     read(_fd, __dta, len);
 
 
@@ -266,7 +260,6 @@ byte I2C_CAN::init_Filt(byte num, byte ext, unsigned long ulData)       // init 
     unsigned char filt = (7+num)*0x10;
     
     IIC_CAN_SetReg(filt, 5, dta);
-    //delay(50);
     I2C_sleep(50000);
 }
 
