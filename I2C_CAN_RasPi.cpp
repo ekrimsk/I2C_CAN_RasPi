@@ -144,7 +144,10 @@ bool I2C_CAN::IIC_CAN_GetReg(unsigned char __reg, unsigned char *__dta)
 
     // Write so it point to the register 
     wiringPiI2CWrite(_fd, __reg);
-    I2C_sleep(MIN_WRITE_DELAY);
+    //I2C_sleep(MIN_WRITE_DELAY);
+
+    printf("bar\n");
+
 
 
     // No read a byte back 
